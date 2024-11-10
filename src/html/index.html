@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<title>todo-app</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="/css">
+	<link rel="icon" type="image/x-icon" href="favicon">
+</head>
+
+<body>
+	<h2>TODO APP</h2>
+	<span id="actions">
+		<div id="form">
+			<div>
+				<span>Name</span>
+				<input type="text" id="todoName" />
+			</div>
+			<div>
+				<span>Description</span>
+				<input type="text" id="todoDescription" />
+			</div>
+			<div>
+				<span>Date</span>
+				<input type="date" id="todoDate" />
+			</div>
+			<div>
+				<span>Time</span>
+				<input type="time" id="todoTime" />
+			</div>
+			<div>
+				<span>Priority</span>
+				<select id="todoPriority">
+					<option value="1">HIGH</option>
+					<option value="2">MEDIUM</option>
+					<option value="3">LOW</option>
+				</select>
+			</div>
+			<div>
+				<span title="used for GET, UPDATE, DELETE">Id</span>
+
+				<input title="used for GET, UPDATE, DELETE" type="number" id="todoId" />
+			</div>
+		</div>
+
+		<button id="getAllTodos">GET ALL</button>
+		<button id="getTodo">GET</button>
+		<button id="createTodo">CREATE</button>
+		<button id="updateTodo">UPDATE</button>
+		<button id="deleteTodo">DELETE</button>
+		<button id="deleteAllTodos">DELETE ALL</button>
+	</span>
+
+	<span id="todos"></span>
+</body>
+
+<script src="/js"></script>
+<script>
+	actions.getAllTodos();
+</script>
+
+</html>

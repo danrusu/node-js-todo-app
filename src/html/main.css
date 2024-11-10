@@ -1,0 +1,76 @@
+span {
+        display: inline-block;
+}
+
+#actions {
+        width: 30%;
+}
+
+button,
+input,
+select,
+label,
+textarea {
+        margin: 10px;
+        padding: 5px;
+        width: 150px;
+}
+
+button,
+label {
+        display: block;
+}
+
+button:hover {
+        background-color: indianred;
+        color: white;
+
+}
+
+textarea {
+        width: 350px;
+}
+
+input,
+select {
+        text-align: center;
+}
+
+#form span {
+        display: inline-block;
+        width: 100px;
+        color: darkblue;
+        margin: 10px;
+}
+
+/* TODOs */
+
+#todos {
+        width: 30%;
+        vertical-align: top;
+        font-size: 1em;
+}
+
+#todos .name {
+        font-size: 1.5em;
+}
+
+[class*=priority-] {
+        color: white;
+        text-align: center;
+        margin-top: 2px;
+}
+
+.priority-1-todo {
+        background-color: crimson;
+
+}
+
+.priority-2-todo {
+        background-color: orange;
+
+}
+
+.priority-3-todo {
+        background-color: green;
+}

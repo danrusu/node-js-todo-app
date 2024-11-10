@@ -1,0 +1,22 @@
+{
+  "name": "node-js-todo-ap",
+  "version": "1.0.0",
+  "description": "Dummy TODO web app",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon --watch src src/app.js"
+  },
+  "keywords": [
+    "seb app",
+    "api test"
+  ],
+  "author": "Dan Rusu",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}
