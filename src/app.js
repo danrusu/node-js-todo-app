@@ -37,7 +37,7 @@ app.get('/api/todo', getAll);
 app.get('/api/todo/:id', getTodo);
 app.post('/api/todo', createTodo);
 app.put('/api/todo/:id', updateTodo);
-app.delete('/api/todo/:id', deleteTodo);
+app.delete('/api/todo', deleteTodo);
 
 const notifyServerStart = () =>
   console.log(`server listening at http://localhost:${port}/`);

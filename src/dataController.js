@@ -59,7 +59,7 @@ const updateTodo = async (req, res) => {
 
 const deleteTodo = async (req, res) => {
   const todos = await read();
-  const id = req.params.id;
+  const { id } = req.query;
   if (id == 'all') {
     write([]);
     res.send({ status: 'deleted all', deleted: todos });

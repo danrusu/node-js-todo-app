@@ -59,7 +59,7 @@ const actions = {
   },
 
   deleteTodo: async todoId => {
-    const responseJson = await todoApiFetch(`/${todoId}`, {
+    const responseJson = await todoApiFetch(`?id=${todoId}`, {
       method: 'DELETE',
     });
     actions.getAllTodos();
@@ -67,7 +67,7 @@ const actions = {
   },
 
   deleteAllTodos: async () => {
-    const responseJson = await todoApiFetch('/all', { method: 'DELETE' });
+    const responseJson = await todoApiFetch('?id=all', { method: 'DELETE' });
     resetTodos();
     return responseJson;
   },
