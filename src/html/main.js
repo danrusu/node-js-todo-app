@@ -7,6 +7,7 @@ const selectById = id => document.getElementById(id);
 const selectAll = cssSelector =>
   [].slice.call(document.querySelectorAll(cssSelector));
 const setText = (id, text) => (selectById(id).innerHTML = text);
+const setInputValue = (id, value) => (selectById(id).value = value);
 
 selectById('todoId').value = 0;
 
@@ -75,19 +76,12 @@ const actions = {
 
 const todoInfoAlert = async id => {
   const { name, priority, description, date, time } = await actions.getTodo(id);
-  const info = {
-    TODO: name,
-    Priority: priority,
-    Description: description,
-    Date: date,
-    Time: time,
-  };
-  alert(
-    Object.entries(info)
-      .filter(([_, v]) => v !== '')
-      .map(([k, v]) => `${k}: ${v}`)
-      .join('\n'),
-  );
+  setInputValue('todoName', name);
+  setInputValue('todoDescription', description);
+  setInputValue('todoDate', date);
+  setInputValue('todoTime', time);
+  setInputValue('todoPriority', priority);
+  setInputValue('todoId', id);
 };
 
 // todo component
@@ -130,8 +124,8 @@ const createTodoHtml = todoJson => {
 };
 
 const isTodoValid = () => {
-  if (selectById('todoName').value.length < 5) {
-    alert('Name should have at least 5 characters.');
+  if (selectById('todoName').value.length < 3) {
+    alert('Name should have at least 3 characters.');
     return false;
   }
   return true;
