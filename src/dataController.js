@@ -38,7 +38,7 @@ const createTodo = async (req, res) => {
   const id = greatestId + 1;
   todos.push({ ...req.body, id });
   write(todos);
-  res.send({ status: `created todo ${todo.is}`, created: todo });
+  res.status(201).send({ status: `created todo ${todo.is}`, created: todo });
 };
 
 const updateTodo = async (req, res) => {
