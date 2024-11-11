@@ -36,11 +36,10 @@ const actions = {
     if (!isTodoValid()) {
       return;
     }
-    //console.log('body:  ' + getTodoJson());
     const responseJson = await todoApiFetch('', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: getTodoJson(),
+      body: todoJson,
     });
     actions.getAllTodos();
     return responseJson;
@@ -74,7 +73,7 @@ const actions = {
   },
 };
 
-const todoInfoAlert = async id => {
+const setForm = async id => {
   const { name, priority, description, date, time } = await actions.getTodo(id);
   setInputValue('todoName', name);
   setInputValue('todoDescription', description);
@@ -102,10 +101,10 @@ const createTodoHtml = todoJson => {
       return div('');
     }
     if (!time) {
-      return div(date, { onclick: `todoInfoAlert(${id})` });
+      return div(date, { onclick: `setForm(${id})` });
     }
     return div(`${date}&nbsp; &nbsp;${time}`, {
-      onclick: `todoInfoAlert(${id})`,
+      onclick: `setForm(${id})`,
     });
   };
   const todoInfoDiv =
@@ -113,9 +112,9 @@ const createTodoHtml = todoJson => {
       class: 'delete',
       onclick: `actions.deleteTodo(${id})`,
     }) +
-    div(name, { class: 'name', onclick: `todoInfoAlert(${id})` }) +
-    div(description, { onclick: `todoInfoAlert(${id})` }) +
-    div(`ID: ${id}`, { onclick: `todoInfoAlert(${id})` }) +
+    div(name, { class: 'name', onclick: `setForm(${id})` }) +
+    div(description, { onclick: `setForm(${id})` }) +
+    div(`ID: ${id}`, { onclick: `setForm(${id})` }) +
     dateTimeDiv(date, time);
 
   return div(todoInfoDiv, {
@@ -158,7 +157,10 @@ const getTodoJsonBody = () => JSON.parse(selectById('todoBody').value);
 const getTodoId = () => selectById('todoId').value;
 
 const buttonsClickEventHandlers = {
-  createTodo: () => actions.createTodo(getTodoJson()),
+  createTodo: () => {
+    const { id, ...body } = JSON.parse(getTodoJson());
+    actions.createTodo(JSON.stringify(body));
+  },
   updateTodo: () => actions.updateTodo(getTodoId(), getTodoJson()),
   deleteAllTodos: actions.deleteAllTodos,
 };
