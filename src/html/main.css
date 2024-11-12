@@ -1,5 +1,14 @@
+:root {
+        --blue: darkblue;
+        --red: crimson;
+        --green: #00A36C;
+        --orange: darkorange;
+        --light-blue: #1e90ff;
+}
+
+
 h2 {
-        color: darkblue;
+        color: var(--blue);
 }
 
 span {
@@ -31,12 +40,12 @@ label {
 }
 
 button:hover {
-        background-color: green;
+        background-color: var(--orange);
         color: white;
 }
 
 #deleteAllTodos:hover {
-        background-color: crimson;
+        background-color: var(--red);
         color: white;
 }
 
@@ -53,7 +62,7 @@ select {
 #form span {
         display: inline-block;
         width: 100px;
-        color: darkblue;
+        color: var(--blue);
         margin: 10px;
 }
 
@@ -78,17 +87,17 @@ select {
 }
 
 .priority-1-todo {
-        background-color: crimson;
+        background-color: var(--red);
 
 }
 
 .priority-2-todo {
-        background-color: darkorange;
+        background-color: var(--orange);
 
 }
 
 .priority-3-todo {
-        background-color: green;
+        background-color: var(--green);
 }
 
 .delete {
