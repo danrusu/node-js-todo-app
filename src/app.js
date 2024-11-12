@@ -17,7 +17,7 @@ const [serveHome, serveCss, serveJs, serveFavicon] = [
 ].map(filePath => (_, res) => serveFileFromRoot(res, `html/${filePath}`));
 
 // routes
-app.get('/health-check', (_, res) => {
+app.get('/api/health-check', (_, res) => {
   res.send({ status: 'healthy' });
 });
 app.get('/', serveHome);
