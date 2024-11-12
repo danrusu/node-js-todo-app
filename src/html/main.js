@@ -108,13 +108,17 @@ const createTodoHtml = todoJson => {
     });
   };
   const todoInfoDiv =
+    span(id, {
+      class: 'todo-id',
+      title: 'Unique id',
+    }) +
     span('x', {
       class: 'delete',
+      title: 'Delete',
       onclick: `actions.deleteTodo(${id})`,
     }) +
     div(name, { class: 'name', onclick: `setForm(${id})` }) +
     div(description, { onclick: `setForm(${id})` }) +
-    div(`ID: ${id}`, { onclick: `setForm(${id})` }) +
     dateTimeDiv(date, time);
 
   return div(todoInfoDiv, {

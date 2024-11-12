@@ -97,3 +97,10 @@ select {
         float: right;
         cursor: pointer;
 }
+
+.todo-id {
+        padding: 0px 3px;
+        border: 1px solid black;
+        float: left;
+        cursor: pointer;
+}
