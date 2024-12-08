@@ -1,8 +1,12 @@
-const API_BASE_URL = `${location.origin}/api`;
-
 class TodoHttpClient {
+  apiBaseUrl;
+
+  constructor(apiBaseUrl) {
+    this.apiBaseUrl = apiBaseUrl;
+  }
+
   async getAllTodos() {
-    const responseJson = await todoApiFetch('');
+    const responseJson = await this.fetch('');
     resetTodos();
 
     responseJson
@@ -12,15 +16,12 @@ class TodoHttpClient {
   }
 
   async getTodo(todoId) {
-    const responseJson = await todoApiFetch(`/${todoId}`);
+    const responseJson = await this.fetch(`/${todoId}`);
     return responseJson;
   }
 
   async createTodo(todoJson) {
-    if (!isTodoValid()) {
-      return;
-    }
-    const responseJson = await todoApiFetch('', {
+    const responseJson = await this.fetch('', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: todoJson,
@@ -30,10 +31,7 @@ class TodoHttpClient {
   }
 
   async updateTodo(todoId) {
-    if (!isTodoValid()) {
-      return;
-    }
-    const responseJson = await todoApiFetch(`/${todoId}`, {
+    const responseJson = await this.fetch(`/${todoId}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: getTodoJson(),
@@ -43,7 +41,7 @@ class TodoHttpClient {
   }
 
   async deleteTodo(todoId) {
-    const responseJson = await todoApiFetch(`?id=${todoId}`, {
+    const responseJson = await this.fetch(`?id=${todoId}`, {
       method: 'DELETE',
     });
     this.getAllTodos();
@@ -51,15 +49,18 @@ class TodoHttpClient {
   }
 
   async deleteAllTodos() {
-    const responseJson = await todoApiFetch('?id=all', { method: 'DELETE' });
-    resetTodos();
+    const responseJson = await this.fetch('?id=all', {
+      method: 'DELETE',
+    });
+    this.resetTodos();
     return responseJson;
   }
-}
 
-async function todoApiFetch(urlPath, options) {
-  const response = await fetch(`${API_BASE_URL}/todo${urlPath || ''}`, options);
-  return await response.json();
+  async fetch(urlPath, options) {
+    const response = await fetch(
+      `${this.apiBaseUrl}/todo${urlPath || ''}`,
+      options,
+    );
+    return await response.json();
+  }
 }
-
-const todoHttpClient = new TodoHttpClient();

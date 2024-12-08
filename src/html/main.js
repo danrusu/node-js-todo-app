@@ -1,19 +1,27 @@
 // needs todoHttpClient (todo-http-client.js)
+const todoHttpClient = new TodoHttpClient(`${location.origin}/api`);
+todoHttpClient.getAllTodos();
 
 selectById('todoId').value = 0;
 
 bindButtonsActionClickHandlers();
 
-todoHttpClient.getAllTodos();
-
 // functions (hoisted)
 function bindButtonsActionClickHandlers() {
   const buttonsClickEventHandlers = {
     createTodo: () => {
+      if (!isTodoValid()) {
+        return;
+      }
       const { id, ...body } = JSON.parse(getTodoJson());
       todoHttpClient.createTodo(JSON.stringify(body));
     },
-    updateTodo: () => todoHttpClient.updateTodo(getTodoId(), getTodoJson()),
+    updateTodo: () => {
+      if (!isTodoValid()) {
+        return;
+      }
+      todoHttpClient.updateTodo(getTodoId(), getTodoJson());
+    },
     deleteAllTodos: todoHttpClient.deleteAllTodos,
   };
 
