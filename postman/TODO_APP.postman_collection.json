@@ -16,20 +16,12 @@
 						"exec": [
 							"console.log('API_BASE_URL: ', pm.environment.get('API_BASE_URL'));\r",
 							"\r",
-							"pm.test(\"Status code is 200\", () => {\r",
-							"    pm.response.to.have.status(200);    \r",
-							"});\r",
-							"\r",
-							"pm.test(\"fetched 5 todos \", () => {\r",
-							"    const body = pm.response.json();\r",
-							"    pm.expect(body).to.have.lengthOf(5);\r",
-							"    // pm.expect(body.length).equals(5);\r",
-							"});\r",
-							"\r",
-							"const learnJsTodoId = pm.response.json().find(todo => todo.name == 'Learn JS')?.id;\r",
-							"console.log('Learn JS id: ', learnJsTodoId);\r",
-							"\r",
-							"pm.collectionVariables.set('learnJsTodoId', learnJsTodoId);"
+							"pm.test(\"API is healthy\", () => {\r",
+							"    const response = pm.response.json();\r",
+							"    pm.expect(response).deep.equals({\r",
+							"        \"status\": \"healthy\"\r",
+							"    });\r",
+							"});"
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -39,7 +31,18 @@
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"console.log('prerequest script')"
+							"const btoa = require('btoa');\r",
+							"\r",
+							"const username = pm.environment.get('USERNAME');\r",
+							"const password = pm.environment.get('PASSWORD');\r",
+							"\r",
+							"const base64Credentials = btoa(`${username}:${password}`);\r",
+							"const basicAuth = `Basic ${base64Credentials}`;\r",
+							"\r",
+							"pm.collectionVariables.set('basicAuth', basicAuth);\r",
+							"console.log('basicAuth: ', basicAuth);\r",
+							"\r",
+							""
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -50,8 +53,17 @@
 				"disableBodyPruning": true
 			},
 			"request": {
+				"auth": {
+					"type": "noauth"
+				},
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{basicAuth}}",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": "",
@@ -62,12 +74,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{API_BASE_URL}}/todo",
+					"raw": "{{API_BASE_URL}}/health-check",
 					"host": [
 						"{{API_BASE_URL}}"
 					],
 					"path": [
-						"todo"
+						"health-check"
 					]
 				},
 				"description": "Generated from cURL: curl '[http://localhost:1112/api/todo'](http://localhost:1112/api/todo')  \n\\-H 'Accept: _/_'  \n\\-H 'Accept-Language: en-US,en;q=0.9,ro;q=0.8'  \n\\-H 'Cache-Control: no-cache'  \n\\-H 'Connection: keep-alive'  \n\\-H 'Pragma: no-cache'  \n\\-H 'Referer: [http://localhost:1112/'](http://localhost:1112/')  \n\\-H 'Sec-Fetch-Dest: empty'  \n\\-H 'Sec-Fetch-Mode: cors'  \n\\-H 'Sec-Fetch-Site: same-origin'  \n\\-H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36'  \n\\-H 'sec-ch-ua: \"Chromium\";v=\"130\", \"Google Chrome\";v=\"130\", \"Not?A_Brand\";v=\"99\"'  \n\\-H 'sec-ch-ua-mobile: ?0'  \n\\-H 'sec-ch-ua-platform: \"Windows\"'"
@@ -91,7 +103,7 @@
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"console.log('prerequest script')"
+							""
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -102,6 +114,21 @@
 				"disableBodyPruning": true
 			},
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{PASSWORD}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{USERNAME}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "HEAD",
 				"header": [],
 				"body": {
@@ -133,7 +160,22 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							""
+							"console.log('API_BASE_URL: ', pm.environment.get('API_BASE_URL'));\r",
+							"\r",
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);    \r",
+							"});\r",
+							"\r",
+							"pm.test(\"fetched 5 todos \", () => {\r",
+							"    const body = pm.response.json();\r",
+							"    pm.expect(body).to.have.lengthOf(5);\r",
+							"    // pm.expect(body.length).equals(5);\r",
+							"});\r",
+							"\r",
+							"const learnJsTodoId = pm.response.json().find(todo => todo.name == 'Learn JS')?.id;\r",
+							"console.log('Learn JS id: ', learnJsTodoId);\r",
+							"\r",
+							"pm.collectionVariables.set('learnJsTodoId', learnJsTodoId);"
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -143,7 +185,7 @@
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"console.log('prerequest script')"
+							""
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -166,12 +208,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{API_BASE_URL}}/health-check",
+					"raw": "{{API_BASE_URL}}/todo",
 					"host": [
 						"{{API_BASE_URL}}"
 					],
 					"path": [
-						"health-check"
+						"todo"
 					]
 				},
 				"description": "Generated from cURL: curl '[http://localhost:1112/api/todo'](http://localhost:1112/api/todo')  \n\\-H 'Accept: _/_'  \n\\-H 'Accept-Language: en-US,en;q=0.9,ro;q=0.8'  \n\\-H 'Cache-Control: no-cache'  \n\\-H 'Connection: keep-alive'  \n\\-H 'Pragma: no-cache'  \n\\-H 'Referer: [http://localhost:1112/'](http://localhost:1112/')  \n\\-H 'Sec-Fetch-Dest: empty'  \n\\-H 'Sec-Fetch-Mode: cors'  \n\\-H 'Sec-Fetch-Site: same-origin'  \n\\-H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36'  \n\\-H 'sec-ch-ua: \"Chromium\";v=\"130\", \"Google Chrome\";v=\"130\", \"Not?A_Brand\";v=\"99\"'  \n\\-H 'sec-ch-ua-mobile: ?0'  \n\\-H 'sec-ch-ua-platform: \"Windows\"'"
@@ -560,7 +602,7 @@
 							"pm.test(\"Status code is 201\", function () {\r",
 							"    pm.response.to.have.status(201);\r",
 							"    pm.expect(pm.response.status).equals('Created');\r",
-							"    if (true) {\r",
+							"    if (true) { // fail test on purpose to see behavior/reporting\r",
 							"        throw new Error('test failed due to condition');\r",
 							"    }\r",
 							"});"
@@ -744,6 +786,21 @@
 			"response": []
 		}
 	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "{{PASSWORD}}",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "{{USERNAME}}",
+				"type": "string"
+			}
+		]
+	},
 	"event": [
 		{
 			"listen": "prerequest",
@@ -774,6 +831,10 @@
 	"variable": [
 		{
 			"key": "learnJsTodoId",
+			"value": ""
+		},
+		{
+			"key": "basicAuth",
 			"value": ""
 		}
 	]

@@ -30,5 +30,13 @@
     "time": "23:00",
     "priority": 1,
     "id": 4
+  },
+  {
+    "name": "Learn JS",
+    "description": "practice JavaScript fundamentals",
+    "date": "2024-11-13",
+    "time": "17:00",
+    "priority": 2,
+    "id": 5
   }
 ]
