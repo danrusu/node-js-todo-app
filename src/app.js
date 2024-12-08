@@ -9,10 +9,11 @@ const serveFileFromRoot = (res, relativePath) =>
   res.sendFile(path.join(__dirname, relativePath));
 
 // static files
-const [serveHome, serveCss, serveJs, serveFavicon] = [
+const [serveHome, serveCss, serveMainJs, serveTodoClientJs, serveFavicon] = [
   'index.html',
   'main.css',
   'main.js',
+  'todo-http-client.js',
   'favicon.ico',
 ].map(filePath => (_, res) => serveFileFromRoot(res, `html/${filePath}`));
 
@@ -22,7 +23,8 @@ app.get('/api/health-check', (_, res) => {
 });
 app.get('/', serveHome);
 app.get('/css', serveCss);
-app.get('/js', serveJs);
+app.get('/main', serveMainJs);
+app.get('/todo-http-client', serveTodoClientJs);
 app.get('/favicon', serveFavicon);
 
 const {

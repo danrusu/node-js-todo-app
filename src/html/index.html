@@ -50,12 +50,11 @@
 	</span>
 
 	<span id="todos"></span>
+
+	<!-- It is recommended to put scripts here -->
+	<script src="/todo-http-client" async defer></script>
+	<script src="/main" async defer></script>
 </body>
 
-<script src="/js"></script>
-<script>
-	actions.getAllTodos();
-	document.getElementById('todoDate').value = new Date().toISOString().substr(0, 10);
-</script>
 
 </html>

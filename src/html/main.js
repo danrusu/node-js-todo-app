@@ -1,99 +1,51 @@
-const API_BASE_URL = 'http://localhost:1112/api';
-
-const prettify = json => JSON.stringify(json, null, 2);
-const logJson = json => console.log(prettify(json));
-
-const selectById = id => document.getElementById(id);
-const selectAll = cssSelector =>
-  [].slice.call(document.querySelectorAll(cssSelector));
-const setText = (id, text) => (selectById(id).innerHTML = text);
-const setInputValue = (id, value) => (selectById(id).value = value);
+// needs todoHttpClient (todo-http-client.js)
 
 selectById('todoId').value = 0;
 
-const todoApiFetch = async (urlPath, options) => {
-  const response = await fetch(`${API_BASE_URL}/todo${urlPath || ''}`, options);
-  return await response.json();
-};
+bindButtonsActionClickHandlers();
 
-const actions = {
-  getAllTodos: async () => {
-    const responseJson = await todoApiFetch('');
-    resetTodos();
+todoHttpClient.getAllTodos();
 
-    responseJson
-      .map(createTodoHtml)
-      .forEach(todoHtml => (todos.innerHTML = todos.innerHTML + todoHtml));
-    return responseJson;
-  },
+// functions (hoisted)
+function bindButtonsActionClickHandlers() {
+  const buttonsClickEventHandlers = {
+    createTodo: () => {
+      const { id, ...body } = JSON.parse(getTodoJson());
+      todoHttpClient.createTodo(JSON.stringify(body));
+    },
+    updateTodo: () => todoHttpClient.updateTodo(getTodoId(), getTodoJson()),
+    deleteAllTodos: todoHttpClient.deleteAllTodos,
+  };
 
-  getTodo: async todoId => {
-    const responseJson = await todoApiFetch(`/${todoId}`);
-    return responseJson;
-  },
+  selectAll('#actions button').forEach(button =>
+    button.addEventListener('click', buttonsClickEventHandlers[button.id]),
+  );
+}
 
-  createTodo: async todoJson => {
-    if (!isTodoValid()) {
-      return;
-    }
-    const responseJson = await todoApiFetch('', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: todoJson,
-    });
-    actions.getAllTodos();
-    return responseJson;
-  },
-
-  updateTodo: async todoId => {
-    if (!isTodoValid()) {
-      return;
-    }
-    const responseJson = await todoApiFetch(`/${todoId}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: getTodoJson(),
-    });
-    actions.getAllTodos();
-    return responseJson;
-  },
-
-  deleteTodo: async todoId => {
-    const responseJson = await todoApiFetch(`?id=${todoId}`, {
-      method: 'DELETE',
-    });
-    actions.getAllTodos();
-    return responseJson;
-  },
-
-  deleteAllTodos: async () => {
-    const responseJson = await todoApiFetch('?id=all', { method: 'DELETE' });
-    resetTodos();
-    return responseJson;
-  },
-};
-
-const setForm = async id => {
-  const { name, priority, description, date, time } = await actions.getTodo(id);
+async function setForm(id) {
+  const { name, priority, description, date, time } =
+    await todoHttpClient.getTodo(id);
   setInputValue('todoName', name);
   setInputValue('todoDescription', description);
   setInputValue('todoDate', date);
   setInputValue('todoTime', time);
   setInputValue('todoPriority', priority);
   setInputValue('todoId', id);
-};
+}
 
 // todo component
-const tag = tagName => (content, tagAttributes) => {
-  const attributes = Object.entries(tagAttributes || {})
-    .map(([k, v]) => `${k}="${v}"`)
-    .join(' ');
-  return `<${tagName} ${attributes}>${content}</${tagName}>`;
-};
+function tag(tagName) {
+  return function (content, tagAttributes) {
+    const attributes = Object.entries(tagAttributes || {})
+      .map(([k, v]) => `${k}="${v}"`)
+      .join(' ');
+    return `<${tagName} ${attributes}>${content}</${tagName}>`;
+  };
+}
 
-const [div, span] = ['div', 'span'].map(tag);
+const [div, span] = ['div', 'span'].map(tag); // functions to create div and span
 
-const createTodoHtml = todoJson => {
+function createTodoHtml(todoJson) {
   const todoClass = `priority-${todoJson.priority}-todo`;
   const { name, description, id, date, time } = todoJson;
   const dateTimeDiv = (date, time) => {
@@ -115,7 +67,7 @@ const createTodoHtml = todoJson => {
     span('x', {
       class: 'delete',
       title: 'Delete',
-      onclick: `actions.deleteTodo(${id})`,
+      onclick: `todoHttpClient.deleteTodo(${id})`,
     }) +
     div(name, { class: 'name', onclick: `setForm(${id})` }) +
     div(description, { onclick: `setForm(${id})` }) +
@@ -124,17 +76,17 @@ const createTodoHtml = todoJson => {
   return div(todoInfoDiv, {
     class: todoClass,
   });
-};
+}
 
-const isTodoValid = () => {
+function isTodoValid() {
   if (selectById('todoName').value.length < 3) {
     alert('Name should have at least 3 characters.');
     return false;
   }
   return true;
-};
+}
 
-const getTodoJson = () => {
+function getTodoJson() {
   const todoJson = selectAll('#form input, #form select').reduce(
     (acc, input) => {
       // id = todoName => key = name
@@ -148,30 +100,47 @@ const getTodoJson = () => {
     {},
   );
   return JSON.stringify(todoJson);
-};
+}
 
-const resetTodos = () => (selectById('todos').innerHTML = '');
+function resetTodos() {
+  selectById('todos').innerHTML = '';
+}
 
-const addTodoActionToButton = buttonElement => {
+function addTodoActionToButton(buttonElement) {
   console.log(todo[button.id]);
   buttonElement.addEventListener('click', todo[button.id]);
-};
+}
 
-const getTodoJsonBody = () => JSON.parse(selectById('todoBody').value);
-const getTodoId = () => selectById('todoId').value;
+function getTodoJsonBody() {
+  return JSON.parse(selectById('todoBody').value);
+}
 
-const buttonsClickEventHandlers = {
-  createTodo: () => {
-    const { id, ...body } = JSON.parse(getTodoJson());
-    actions.createTodo(JSON.stringify(body));
-  },
-  updateTodo: () => actions.updateTodo(getTodoId(), getTodoJson()),
-  deleteAllTodos: actions.deleteAllTodos,
-};
+function getTodoId() {
+  return selectById('todoId').value;
+}
 
-const bindButtonsActionClickHandlers = () =>
-  selectAll('#actions button').forEach(button =>
-    button.addEventListener('click', buttonsClickEventHandlers[button.id]),
-  );
+// utilities
 
-bindButtonsActionClickHandlers();
+function prettify(json) {
+  return JSON.stringify(json, null, 2);
+}
+
+function logJson(json) {
+  console.log(prettify(json));
+}
+
+function selectById(id) {
+  return document.getElementById(id);
+}
+
+function selectAll(cssSelector) {
+  return [].slice.call(document.querySelectorAll(cssSelector));
+}
+
+function setText(id, text) {
+  selectById(id).innerHTML = text;
+}
+
+function setInputValue(id, value) {
+  selectById(id).value = value;
+}
