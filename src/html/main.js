@@ -3,7 +3,7 @@
 // needs todoHttpClient (todo-http-client.js)
 
 const todoHttpClient = new TodoHttpClient(`${location.origin}/api`);
-todoHttpClient.getAllTodos();
+setAllTodos();
 
 selectById('todoId').value = 0;
 
@@ -14,20 +14,25 @@ bindButtonsActionClickHandlers();
 // functions (hoisted)
 function bindButtonsActionClickHandlers() {
   const buttonsClickEventHandlers = {
-    createTodo: () => {
+    createTodo: async () => {
       if (!isTodoValid()) {
         return;
       }
       const { id, ...body } = JSON.parse(getTodoJson());
-      todoHttpClient.createTodo(JSON.stringify(body));
+      await todoHttpClient.createTodo(JSON.stringify(body));
+      await setAllTodos();
     },
-    updateTodo: () => {
+    updateTodo: async () => {
       if (!isTodoValid()) {
         return;
       }
-      todoHttpClient.updateTodo(getTodoId(), getTodoJson());
+      await todoHttpClient.updateTodo(getTodoId(), getTodoJson());
+      await setAllTodos();
     },
-    deleteAllTodos: todoHttpClient.deleteAllTodos,
+    deleteAllTodos: async () => {
+      await todoHttpClient.deleteAllTodos();
+      await resetTodos();
+    },
   };
 
   selectAll('#actions button').forEach(button =>
@@ -80,7 +85,7 @@ function createTodoHtml(todoJson) {
     span('x', {
       class: 'delete',
       title: 'Delete',
-      onclick: `todoHttpClient.deleteTodo(${id})`,
+      onclick: `(async () => { await todoHttpClient.deleteTodo(${id}); setAllTodos(); })()`,
     }) +
     div(name, { class: 'name', onclick: `setForm(${id})` }) +
     div(description, { onclick: `setForm(${id})` }) +
@@ -117,6 +122,17 @@ function getTodoJson() {
 
 function resetTodos() {
   selectById('todos').innerHTML = '';
+}
+
+async function setAllTodos() {
+  const todos = selectById('todos');
+  resetTodos();
+  const todosJson = await todoHttpClient.getAllTodos();
+  const todosHtml = todosJson.map(createTodoHtml);
+
+  todosHtml.forEach(todoHtml => {
+    todos.innerHTML = todos.innerHTML + todoHtml;
+  });
 }
 
 function addTodoActionToButton(buttonElement) {
