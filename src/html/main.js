@@ -1,10 +1,15 @@
+// ********* MAIN *********
+
 // needs todoHttpClient (todo-http-client.js)
+
 const todoHttpClient = new TodoHttpClient(`${location.origin}/api`);
 todoHttpClient.getAllTodos();
 
 selectById('todoId').value = 0;
 
 bindButtonsActionClickHandlers();
+
+// ******************
 
 // functions (hoisted)
 function bindButtonsActionClickHandlers() {
