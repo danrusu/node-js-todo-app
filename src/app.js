@@ -41,8 +41,4 @@ app.post('/api/todo', createTodo);
 app.put('/api/todo/:id', updateTodo);
 app.delete('/api/todo', deleteTodo);
 
-const notifyServerStart = () =>
-  console.log(`server listening at http://localhost:${port}/`);
-
-const port = process.env.PORT || 1112;
-app.listen(port, notifyServerStart);
+module.exports = { app };

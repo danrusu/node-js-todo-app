@@ -4,13 +4,16 @@
   "description": "Dummy TODO web app",
   "main": "index.js",
   "scripts": {
-    "start": "node src/app.js",
-    "dev": "nodemon --watch src src/app.js",
+    "start": "node src/server.js",
+    "dev": "nodemon --watch src src/server.js",
     "test:api": "cd postman && newman run TODO_APP.postman_collection.json -e TODO_LOCAL.postman_environment.json -r cli,json,htmlextra"
   },
   "keywords": [
-    "seb app",
-    "api test"
+    "todo",
+    "webapp",
+    "express",
+    "api",
+    "testing"
   ],
   "author": "Dan Rusu",
   "license": "MIT",
