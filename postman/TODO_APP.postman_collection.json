@@ -31,7 +31,7 @@
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"const btoa = require('btoa');\r",
+							"var btoa = require('btoa');\r",
 							"\r",
 							"const username = pm.environment.get('USERNAME');\r",
 							"const password = pm.environment.get('PASSWORD');\r",
@@ -54,14 +54,27 @@
 			},
 			"request": {
 				"auth": {
-					"type": "noauth"
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{PASSWORD}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{USERNAME}}",
+							"type": "string"
+						}
+					]
 				},
 				"method": "GET",
 				"header": [
 					{
 						"key": "Authorization",
 						"value": "{{basicAuth}}",
-						"type": "text"
+						"type": "text",
+						"disabled": true
 					}
 				],
 				"body": {
@@ -808,7 +821,7 @@
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
-					"console.log('collection pre request');"
+					""
 				]
 			}
 		},
@@ -818,8 +831,6 @@
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
-					"console.log('collection post request');\r",
-					"\r",
 					"const allowedSuccessStatusCodes =[200, 201]; \r",
 					"pm.test(`Status code in ${allowedSuccessStatusCodes}`, () => {\r",
 					"    pm.expect(pm.response.code).to.be.oneOf(allowedSuccessStatusCodes);    \r",
