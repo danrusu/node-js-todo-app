@@ -10,6 +10,7 @@ const {
   createTodo,
   updateTodo,
 } = require('./controller/todo-controller.js');
+const { delay } = require('./controller/misc-controler.js');
 
 // middlewares
 app.use(express.json());
@@ -25,6 +26,8 @@ app.get('/api/todo/:id', getTodo);
 app.post('/api/todo', createTodo);
 app.put('/api/todo/:id', updateTodo);
 app.delete('/api/todo', deleteTodo);
+
+app.get('/api/delay/:duration', delay);
 
 // ********** functions
 function serveHome(_, res) {
