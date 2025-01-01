@@ -3,7 +3,8 @@ module.exports = {
 };
 
 async function wait(timeout) {
-  if (typeof timeout !== 'number' || timeout < 0) {
+  const timeoutNr = parseInt(timeout);
+  if (isNaN(timeoutNr) || timeout < 0) {
     throw new Error(`Wrong timeout: ${timeout}`);
   }
   return new Promise(res => {
