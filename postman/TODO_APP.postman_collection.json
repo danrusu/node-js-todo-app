@@ -57,13 +57,13 @@
 					"type": "basic",
 					"basic": [
 						{
-							"key": "password",
-							"value": "{{PASSWORD}}",
+							"key": "username",
+							"value": "{{USERNAME}}",
 							"type": "string"
 						},
 						{
-							"key": "username",
-							"value": "{{USERNAME}}",
+							"key": "password",
+							"value": "{{PASSWORD}}",
 							"type": "string"
 						}
 					]
@@ -93,6 +93,83 @@
 					],
 					"path": [
 						"health-check"
+					]
+				},
+				"description": "Generated from cURL: curl '[http://localhost:1112/api/todo'](http://localhost:1112/api/todo')  \n\\-H 'Accept: _/_'  \n\\-H 'Accept-Language: en-US,en;q=0.9,ro;q=0.8'  \n\\-H 'Cache-Control: no-cache'  \n\\-H 'Connection: keep-alive'  \n\\-H 'Pragma: no-cache'  \n\\-H 'Referer: [http://localhost:1112/'](http://localhost:1112/')  \n\\-H 'Sec-Fetch-Dest: empty'  \n\\-H 'Sec-Fetch-Mode: cors'  \n\\-H 'Sec-Fetch-Site: same-origin'  \n\\-H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36'  \n\\-H 'sec-ch-ua: \"Chromium\";v=\"130\", \"Google Chrome\";v=\"130\", \"Not?A_Brand\";v=\"99\"'  \n\\-H 'sec-ch-ua-mobile: ?0'  \n\\-H 'sec-ch-ua-platform: \"Windows\"'"
+			},
+			"response": []
+		},
+		{
+			"name": "delay",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Response time is between 500 and 600ms', () => {\r",
+							"\tpm.expect(pm.response.responseTime).to.be.greaterThan(500).and.lessThan(600);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{USERNAME}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{PASSWORD}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{basicAuth}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{API_BASE_URL}}/delay/500",
+					"host": [
+						"{{API_BASE_URL}}"
+					],
+					"path": [
+						"delay",
+						"500"
 					]
 				},
 				"description": "Generated from cURL: curl '[http://localhost:1112/api/todo'](http://localhost:1112/api/todo')  \n\\-H 'Accept: _/_'  \n\\-H 'Accept-Language: en-US,en;q=0.9,ro;q=0.8'  \n\\-H 'Cache-Control: no-cache'  \n\\-H 'Connection: keep-alive'  \n\\-H 'Pragma: no-cache'  \n\\-H 'Referer: [http://localhost:1112/'](http://localhost:1112/')  \n\\-H 'Sec-Fetch-Dest: empty'  \n\\-H 'Sec-Fetch-Mode: cors'  \n\\-H 'Sec-Fetch-Site: same-origin'  \n\\-H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36'  \n\\-H 'sec-ch-ua: \"Chromium\";v=\"130\", \"Google Chrome\";v=\"130\", \"Not?A_Brand\";v=\"99\"'  \n\\-H 'sec-ch-ua-mobile: ?0'  \n\\-H 'sec-ch-ua-platform: \"Windows\"'"
