@@ -19,3 +19,10 @@ npm start
 ```bash
 npm run dev
 ```
+
+- Tests
+
+```bash
+#bash terminal
+./test_api_postman.sh
+```
