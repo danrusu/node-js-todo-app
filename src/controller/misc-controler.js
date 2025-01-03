@@ -1,4 +1,4 @@
-const { wait } = require('../util/async-util');
+const { wait } = require('../util/response-util');
 
 module.exports = {
   delay,

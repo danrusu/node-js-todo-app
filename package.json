@@ -9,7 +9,9 @@
     "wait-for-server": "wait-on --config test/wait-on-config.js",
     "kill-server": "kill-port 1112",
     "test:set:data": "ncp test/data/todo-data.json data/todo-data.json",
-    "test:api:postman": "cd postman && newman run TODO_APP.postman_collection.json -e TODO_LOCAL.postman_environment.json -r cli,json,htmlextra"
+    "test:api:postman": "cd postman && newman run TODO_APP.postman_collection.json -e TODO_LOCAL.postman_environment.json -r cli,json,htmlextra",
+    "test:e2e": "cypress run --browser=chrome",
+    "test:e2e:open": "cypress open --e2e --browser=chrome"
   },
   "keywords": [
     "todo",
