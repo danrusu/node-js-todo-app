@@ -1,12 +1,16 @@
 module.exports = { basicAuth };
 
 function basicAuth(req, res, next) {
+  if (req.url.startsWith('/login')) {
+    next();
+    return;
+  }
   const auth = { username: 'tester', password: '123' }; // this should not be in the code :)
 
   const { username, password } = parseBasicAuthenticationHeader(req);
 
   if (!username || !password) {
-    denyAccess(res);
+    denyAccess(req, res);
     return;
   }
 
@@ -16,7 +20,7 @@ function basicAuth(req, res, next) {
     return next();
   }
 
-  denyAccess(res);
+  denyAccess(req, res);
 }
 
 function parseBasicAuthenticationHeader(req) {
@@ -46,7 +50,10 @@ function validCredentials(auth, expectedAuth) {
   );
 }
 
-function denyAccess(res) {
-  res.set('WWW-Authenticate', 'Basic realm="401"');
-  res.status(401).send('Authentication required.');
+function denyAccess(req, res) {
+  if (req.url.includes('/api')) {
+    res.send('401', 'Not authenticated');
+  } else {
+    res.redirect('/login');
+  }
 }

@@ -5,17 +5,39 @@
 <head>
 	<title>login</title>
 	<meta charset="utf-8" />
-	<link rel="stylesheet" href="login.css">
 	<link rel="icon" type="image/x-icon" href="favicon.ico">
+	<style>
+
+	</style>
 </head>
 
 <body>
 	<div class="login">
 		<label for="username">Username</label><input id="username" placeholder="username">
 		<label for="password">Username</label><input id="password" placeholder="password">
-		<button id="login">LOGIN</button>
+		<button id="login" onclick="login();">LOGIN</button>
 	</div>
-	<script src="login.js"></script>
+	<script>
+		async function login() {
+			const username = getInput('username');
+			const password = getInput('password');
+
+			const login = await fetch('/login', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					username,
+					password
+				})
+			});
+
+			console.log(login.headers);
+		}
+		function getInput(id) {
+			return document.getElementById(id).value;
+		}
+
+	</script>
 </body>
 
 
