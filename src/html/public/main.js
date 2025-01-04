@@ -1,6 +1,7 @@
 // ********* MAIN *********
 
 // needs todoHttpClient (todo-http-client.js)
+setUser();
 
 const todoHttpClient = new TodoHttpClient(`${location.origin}/api`);
 setAllTodos();
@@ -12,6 +13,12 @@ bindButtonsActionClickHandlers();
 // ******************
 
 // functions (hoisted)
+async function setUser() {
+  const userResponse = await fetch('/api/username');
+  const { username } = await userResponse.json();
+  document.getElementById('username').innerText = `User: ${username}`;
+}
+
 function bindButtonsActionClickHandlers() {
   const buttonsClickEventHandlers = {
     createTodo: async () => {
