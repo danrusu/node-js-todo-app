@@ -17,7 +17,7 @@ async function authenticate(req, res) {
       .send({ authenticated: true });
     return;
   }
-  res.status('401').send({ error: 'wrong credentials' });
+  res.status(401).send({ error: 'wrong credentials' });
 }
 
 async function username(req, res) {
