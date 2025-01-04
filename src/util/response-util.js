@@ -4,7 +4,9 @@ module.exports = {
   serveFileFromHtml,
 };
 
-async function serveFileFromHtml(res, relativePathFromHtml) {
+function serveFileFromHtml(relativePathFromHtml) {
   const filePath = resolve(__dirname, '..', 'html', relativePathFromHtml);
-  res.sendFile(filePath);
+  return function (_, res) {
+    res.sendFile(filePath);
+  };
 }

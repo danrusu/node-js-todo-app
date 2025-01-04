@@ -31,7 +31,9 @@
 				})
 			});
 
-			console.log(login.headers);
+			if (login.status === 200) {
+				window.location = '/'
+			};
 		}
 		function getInput(id) {
 			return document.getElementById(id).value;

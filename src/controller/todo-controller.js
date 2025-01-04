@@ -1,6 +1,6 @@
 const { writeFile, readFile } = require('fs').promises;
 
-const TODO_DATA_FILE = 'data/todo-data.json';
+const TODO_DATA_FILE = 'data/todo.json';
 
 const read = async () => {
   const todo = await readFile(TODO_DATA_FILE, 'utf8');
@@ -17,7 +17,7 @@ const search = async todoId => {
   return todoIndex;
 };
 
-const getAll = async (_, res) => {
+const getAllTodos = async (_, res) => {
   res.send(await read());
 };
 
@@ -76,4 +76,10 @@ const deleteTodo = async (req, res) => {
   res.send({ status: 'deleted', deleted: todo });
 };
 
-module.exports = { getAll, getTodo, createTodo, updateTodo, deleteTodo };
+module.exports = {
+  getAllTodos,
+  getTodo,
+  createTodo,
+  updateTodo,
+  deleteTodo,
+};
