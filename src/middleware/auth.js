@@ -27,7 +27,7 @@ async function isAuthenticated(req) {
 function denyAccess(req, res) {
   const isApiRequest = req.url.includes('/api');
   if (isApiRequest) {
-    res.send('401', 'Not authenticated');
+    res.status('401').send('Not authenticated');
   } else {
     res.redirect('/login');
   }

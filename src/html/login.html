@@ -7,15 +7,78 @@
 	<meta charset="utf-8" />
 	<link rel="icon" type="image/x-icon" href="favicon.ico">
 	<style>
+		:root {
+			--error-color: crimson;
+			--text-color: lime;
+			--padding: 20px;
+			--font-size: 20px;
+		}
 
+		body {
+			width: 100%;
+			padding-top: calc(var(--padding)*10);
+			background-color: black;
+			color: var(--text-color);
+			font-size: var(--font-size);
+		}
+
+		h2 {
+			padding-bottom: calc(var(--padding)*2);
+			font-size: calc(var(--font-size)*2);
+			text-transform: uppercase;
+		}
+
+		.login {
+			margin: auto;
+			width: 50%;
+		}
+
+		label {
+			margin-left: var(--padding);
+			margin-right: 5px;
+		}
+
+		#login-error {
+			padding-top: var(--padding);
+			color: var(--error-color);
+			text-transform: capitalize;
+			text-align: center;
+		}
+
+		button {
+			margin-left: var(--padding);
+			color: black;
+			background-color: var(--text-color);
+			cursor: pointer;
+			font-weight: bold;
+		}
+
+		button:hover {
+			background-color: white;
+		}
 	</style>
 </head>
 
 <body>
 	<div class="login">
-		<label for="username">Username</label><input id="username" placeholder="username">
-		<label for="password">Username</label><input id="password" placeholder="password">
-		<button id="login" onclick="login();">LOGIN</button>
+		<table>
+			<tr>
+				<th>
+					<h2>todo app</h2>
+				</th>
+			</tr>
+			<tr>
+				<td>
+					<label for="username">Username</label><input id="username" placeholder="username">
+					<label for="password">Password</label><input id="password" placeholder="password">
+					<button id="login" onclick="login();">LOGIN</button>
+				</td>
+			</tr>
+			<tr>
+				<td id="login-error">
+				</td>
+			</tr>
+		</table>
 	</div>
 	<script>
 		async function login() {
@@ -33,7 +96,10 @@
 
 			if (login.status === 200) {
 				window.location = '/'
-			};
+			}
+			else {
+				document.getElementById('login-error').innerText = (await login.json()).error;
+			}
 		}
 		function getInput(id) {
 			return document.getElementById(id).value;

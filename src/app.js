@@ -7,6 +7,7 @@ const {
   authenticate,
   delay,
   isHealthy,
+  username,
   getAllTodos,
   getTodo,
   deleteTodo,
@@ -28,6 +29,7 @@ app.get('/login', serveFileFromHtml('login.html'));
 app.post('/login', authenticate);
 
 app.get('/api/health-check', isHealthy);
+app.get('/api/username', username);
 
 app.get('/api/todo', getAllTodos);
 app.get('/api/todo/:id', getTodo);

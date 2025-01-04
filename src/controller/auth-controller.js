@@ -1,13 +1,31 @@
-const { saveSession } = require('../session');
+const { saveSession, getUsername } = require('../session');
 
-module.exports = { authenticate };
+const VALID_CREDENTIALS = {
+  tester: '123',
+  dev: '321',
+};
+
+module.exports = { authenticate, username };
 
 async function authenticate(req, res) {
-  const sessionId = crypto.randomUUID();
   const { username, password } = req.body;
-  // validate password
-  await saveSession(username, sessionId);
-  res
-    .set('Set-Cookie', `session-id=${sessionId}`)
-    .send({ authenticated: true });
+  if (areValidCredentials(username, password)) {
+    const sessionId = crypto.randomUUID();
+    await saveSession(username, sessionId);
+    res
+      .set('Set-Cookie', `session-id=${sessionId}`)
+      .send({ authenticated: true });
+    return;
+  }
+  res.status('401').send({ error: 'wrong credentials' });
+}
+
+async function username(req, res) {
+  const sessionId = req.headers.cookie.split('=')[1];
+  const username = await getUsername(sessionId);
+  res.send({ username });
+}
+
+function areValidCredentials(username, password) {
+  return VALID_CREDENTIALS[username] === password;
 }
