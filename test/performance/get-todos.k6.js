@@ -50,5 +50,6 @@ export default function () {
 export function handleSummary(data) {
   return {
     [HTML_REPORT_PATH]: htmlReport(data),
+    stdout: textSummary(data, { indent: '→', enableColors: true }),
   };
 }
