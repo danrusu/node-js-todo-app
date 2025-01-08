@@ -12,17 +12,23 @@ npm install
 
 ```bash
 npm start
-```
-
-- Run server in dev mode
-
-```bash
-npm run dev
+# or
+npm run dev # run server in dev mode
 ```
 
 - Tests
 
-```bash
-#bash terminal
-./test_api_postman.sh
-```
+  - API
+
+    ```bash
+    #bash terminal
+    ./test_api_postman.sh
+    ```
+
+  - PERFORMANCE (using [k6](https://grafana.com/docs/k6/latest/using-k6))
+
+    ```bash
+    npm run test:performance:todos
+    # or
+    docker run -e DOCKER=true --network="host" --rm -i grafana/k6 run - < test/performance/get-todos.k6.js
+    ```

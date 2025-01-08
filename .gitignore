@@ -3,3 +3,5 @@ node_modules
 postman/newman
 
 .env
+
+logs

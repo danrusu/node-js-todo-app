@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "nodemon --watch src src/server.js",
+    "dev": "npm run test:set:data && nodemon --watch src src/server.js",
     "wait-for-server": "wait-on --config test/wait-on-config.js",
     "kill-server": "kill-port 1112",
     "test:set:data": "ncp test/data/todo-data.json data/todo-data.json",
-    "test:api:postman": "cd postman && newman run TODO_APP.postman_collection.json -e TODO_LOCAL.postman_environment.json -r cli,json,htmlextra"
+    "test:api:postman": "cd postman && newman run TODO_APP.postman_collection.json -e TODO_LOCAL.postman_environment.json -r cli,json,htmlextra",
+    "test:performance:todos": "k6 run test/performance/get-todos.k6.js"
   },
   "keywords": [
     "todo",
@@ -26,6 +27,7 @@
   "devDependencies": {
     "cypress": "^13.17.0",
     "dotenv": "^16.4.7",
+    "k6": "^0.0.0",
     "kill-port": "^2.0.1",
     "ncp": "^2.0.0",
     "newman": "^6.2.1",
