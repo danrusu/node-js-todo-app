@@ -4,11 +4,16 @@ const { Trend } = require('k6/metrics');
 const {
   htmlReport,
 } = require('https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js');
+const {
+  textSummary,
+} = require('https://jslib.k6.io/k6-summary/0.0.1/index.js');
 
 const averageDuration = new Trend('averageTime');
+const isDocker = __ENV.DOCKER === 'true';
 
-const LOCALHOST =
-  __ENV.DOCKER === 'true' ? 'host.docker.internal' : 'localhost';
+const LOCALHOST = isDocker ? 'host.docker.internal' : 'localhost';
+const REPORT = 'performance-test-report-todos.html';
+const HTML_REPORT_PATH = isDocker ? REPORT : `logs/${REPORT}`;
 
 const authorization = 'Basic dGVzdGVyOjEyMw==';
 
@@ -44,6 +49,6 @@ export default function () {
 
 export function handleSummary(data) {
   return {
-    'logs/summary.html': htmlReport(data),
+    [HTML_REPORT_PATH]: htmlReport(data),
   };
 }

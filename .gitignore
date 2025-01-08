@@ -5,3 +5,5 @@ postman/newman
 .env
 
 logs
+
+performance-test-report.html
