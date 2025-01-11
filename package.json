@@ -23,6 +23,7 @@
   "author": "Dan Rusu",
   "license": "MIT",
   "dependencies": {
+    "cookie-parser": "^1.4.7",
     "express": "^4.19.2"
   },
   "devDependencies": {

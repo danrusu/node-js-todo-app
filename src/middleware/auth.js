@@ -14,12 +14,11 @@ async function authMiddleware(req, res, next) {
   denyAccess(req, res);
 }
 
-async function isAuthenticated(req) {
-  const cookie = req.headers.cookie;
-  if (!cookie) {
+async function isAuthenticated(req) {  
+  const sessionId = req.cookies?.['session-id']; // using cookie-parser middleware
+  if (!sessionId) {
     return false;
   }
-  const sessionId = cookie.split('=')?.[1];
   const username = await getUsername(sessionId);
   return username != undefined;
 }

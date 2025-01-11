@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 
+const cookieParser = require('cookie-parser');
 const { authMiddleware } = require('./middleware/auth.js');
 
 const {
@@ -18,8 +19,9 @@ const {
 const { serveFileFromHtml } = require('./util/response-util.js');
 
 // middlewares
-app.use(express.json());
 app.use(express.static('src/html/public'));
+app.use(cookieParser());
+app.use(express.json());
 app.use(authMiddleware);
 
 // routes
