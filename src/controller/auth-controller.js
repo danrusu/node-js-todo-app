@@ -1,11 +1,11 @@
-const { saveSession, getUsername } = require('../session');
+const { saveSession, getUsername, removeSession } = require('../session');
 
 const VALID_CREDENTIALS = {
   tester: '123',
   dev: '321',
 };
 
-module.exports = { authenticate, username };
+module.exports = { authenticate, username, logout };
 
 async function authenticate(req, res) {
   const { username, password } = req.body;
@@ -28,4 +28,9 @@ async function username(req, res) {
 
 function areValidCredentials(username, password) {
   return VALID_CREDENTIALS[username] === password;
+}
+
+async function logout(req, res){
+  removeSession(req.query.username);
+  res.redirect('/');
 }

@@ -6,6 +6,7 @@ const { authMiddleware } = require('./middleware/auth.js');
 
 const {
   authenticate,
+  logout,
   delay,
   isHealthy,
   username,
@@ -27,6 +28,7 @@ app.use(authMiddleware);
 // routes
 app.get('/', serveFileFromHtml('index.html'));
 app.get('/login', serveFileFromHtml('login.html'));
+app.get('/logout', logout);
 
 app.post('/login', authenticate);
 

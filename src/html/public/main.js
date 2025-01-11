@@ -16,7 +16,7 @@ bindButtonsActionClickHandlers();
 async function setUser() {
   const userResponse = await fetch('/api/username');
   const { username } = await userResponse.json();
-  document.getElementById('username').innerText = `User: ${username}`;
+  document.getElementById('user').innerHTML = `<p>User: ${username}</p><div id="logout" onclick="logout();">Logout</div>`;
 }
 
 function bindButtonsActionClickHandlers() {
@@ -38,7 +38,7 @@ function bindButtonsActionClickHandlers() {
     },
     deleteAllTodos: async () => {
       await todoHttpClient.deleteAllTodos();
-      await resetTodos();
+      resetTodos();
     },
   };
 
@@ -179,4 +179,9 @@ function setText(id, text) {
 
 function setInputValue(id, value) {
   selectById(id).value = value;
+}
+
+function logout(){
+  const username = document.querySelector('#user p').textContent.replace('User: ', '');
+  location.href = `/logout?username=${username}`;
 }

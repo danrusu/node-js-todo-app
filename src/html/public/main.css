@@ -13,7 +13,8 @@ h2 {
 
 #user {
         float: right;
-        margin-right: 20px;
+        margin-right: 50px;
+        font-size: large;
 }
 
 span {
@@ -117,4 +118,10 @@ select {
         border: 3px solid black;
         float: left;
         cursor: pointer;
+}
+
+#logout{
+        cursor: pointer;
+        color: var(--red);
+        text-align: right;
 }

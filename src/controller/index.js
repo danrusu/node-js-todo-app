@@ -1,4 +1,4 @@
-const { authenticate, username } = require('./auth-controller');
+const { authenticate, username, logout } = require('./auth-controller');
 const {
   getAllTodos,
   getTodo,
@@ -10,6 +10,7 @@ const { delay, isHealthy } = require('./misc-controler');
 
 module.exports = {
   authenticate,
+  logout,
   username,
   delay,
   isHealthy,
