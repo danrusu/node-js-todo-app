@@ -81,6 +81,15 @@
 		</table>
 	</div>
 	<script>
+		document.getElementById('password').addEventListener('keyup', loginOnEnter);
+		document.getElementById('login').addEventListener('keyup', loginOnEnter);
+
+		function loginOnEnter(event){
+		  if (event.key === 'Enter'){
+		    login();
+		  }
+		}
+
 		async function login() {
 			const username = getInput('username');
 			const password = getInput('password');

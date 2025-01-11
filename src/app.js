@@ -41,6 +41,4 @@ app.delete('/api/todo', deleteTodo);
 
 app.get('/api/delay/:duration', delay);
 
-// ********** functions
-
 module.exports = { app };
