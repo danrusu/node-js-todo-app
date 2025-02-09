@@ -7,6 +7,10 @@
 }
 
 
+body {
+        background-color: ghostwhite;
+}
+
 h2 {
         color: var(--blue);
 }

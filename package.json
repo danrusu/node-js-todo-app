@@ -4,7 +4,7 @@
   "description": "Dummy TODO web app",
   "main": "index.js",
   "scripts": {
-    "start": "node src/server.js",
+    "start": "npm run test:set:data && node src/server.js",
     "dev": "nodemon --watch src src/server.js",
     "wait-for-server": "wait-on --config test/wait-on-config.js",
     "kill-server": "kill-port 1112",
@@ -21,13 +21,15 @@
   "author": "Dan Rusu",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.19.2"
+    "@aws-sdk/client-s3": "^3.744.0",
+    "express": "^4.19.2",
+    "ncp": "^2.0.0",
+    "postgres": "^3.4.5"
   },
   "devDependencies": {
     "cypress": "^13.17.0",
     "dotenv": "^16.4.7",
     "kill-port": "^2.0.1",
-    "ncp": "^2.0.0",
     "newman": "^6.2.1",
     "newman-reporter-htmlextra": "^1.23.1",
     "nodemon": "^3.1.7",

@@ -1,0 +1,14 @@
+CREATE TABLE todo (
+  name VARCHAR(255),
+  description VARCHAR(255),
+  date VARCHAR(255),
+  time VARCHAR(255),  
+  priority INT,
+  id INT
+);
+
+INSERT INTO todo (name, description, date, time, priority, id)
+VALUES ('JS4Testers 8','JavaScript workshop','2024-12-18','10:00',1,1);
+
+INSERT INTO todo (name, description, date, time, priority, id)
+VALUES ('Swimming','daily swim','2024-12-19','22:00',1,1);
