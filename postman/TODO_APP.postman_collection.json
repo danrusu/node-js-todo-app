@@ -177,6 +177,89 @@
 			"response": []
 		},
 		{
+			"name": "wrong delay [negative]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Bad request\", function () {\r",
+							"\tpm.expect(pm.response.code).equals(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Wrong timeout response\", function () {\r",
+							"\tpm.expect(pm.response.json()).deep.equals({\r",
+							"\t\t\"err\": \"Wrong timeout: x\"\r",
+							"\t});\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{USERNAME}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{PASSWORD}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{basicAuth}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{API_BASE_URL}}/delay/x",
+					"host": [
+						"{{API_BASE_URL}}"
+					],
+					"path": [
+						"delay",
+						"x"
+					]
+				},
+				"description": "Generated from cURL: curl '[http://localhost:1112/api/todo'](http://localhost:1112/api/todo')  \n\\-H 'Accept: _/_'  \n\\-H 'Accept-Language: en-US,en;q=0.9,ro;q=0.8'  \n\\-H 'Cache-Control: no-cache'  \n\\-H 'Connection: keep-alive'  \n\\-H 'Pragma: no-cache'  \n\\-H 'Referer: [http://localhost:1112/'](http://localhost:1112/')  \n\\-H 'Sec-Fetch-Dest: empty'  \n\\-H 'Sec-Fetch-Mode: cors'  \n\\-H 'Sec-Fetch-Site: same-origin'  \n\\-H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36'  \n\\-H 'sec-ch-ua: \"Chromium\";v=\"130\", \"Google Chrome\";v=\"130\", \"Not?A_Brand\";v=\"99\"'  \n\\-H 'sec-ch-ua-mobile: ?0'  \n\\-H 'sec-ch-ua-platform: \"Windows\"'"
+			},
+			"response": []
+		},
+		{
 			"name": "all todos",
 			"event": [
 				{
@@ -219,7 +302,7 @@
 						}
 					]
 				},
-				"method": "HEAD",
+				"method": "GET",
 				"header": [],
 				"body": {
 					"mode": "raw",
@@ -574,7 +657,7 @@
 			"response": []
 		},
 		{
-			"name": "delete todo with wrong id",
+			"name": "delete todo with wrong id [negative]",
 			"event": [
 				{
 					"listen": "test",
@@ -692,9 +775,9 @@
 							"pm.test(\"Status code is 201\", function () {\r",
 							"    pm.response.to.have.status(201);\r",
 							"    pm.expect(pm.response.status).equals('Created');\r",
-							"    if (true) { // fail test on purpose to see behavior/reporting\r",
-							"        throw new Error('test failed due to condition');\r",
-							"    }\r",
+							"    // if (true) { // fail test on purpose to see behavior/reporting\r",
+							"    //     throw new Error('test failed due to condition');\r",
+							"    // }\r",
 							"});"
 						],
 						"type": "text/javascript",
@@ -908,10 +991,17 @@
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
-					"const allowedSuccessStatusCodes =[200, 201]; \r",
-					"pm.test(`Status code in ${allowedSuccessStatusCodes}`, () => {\r",
-					"    pm.expect(pm.response.code).to.be.oneOf(allowedSuccessStatusCodes);    \r",
-					"});"
+					"const allowedSuccessStatusCodes = [200, 201];\r",
+					"\r",
+					"if (!isNegativeTest(pm.info.requestName)) {\r",
+					"    pm.test(`Status code in ${allowedSuccessStatusCodes}`, () => {\r",
+					"        pm.expect(pm.response.code).to.be.oneOf(allowedSuccessStatusCodes);\r",
+					"    });\r",
+					"}\r",
+					"\r",
+					"function isNegativeTest(testName) {\r",
+					"    return testName.includes('[negative]');\r",
+					"}"
 				]
 			}
 		}
