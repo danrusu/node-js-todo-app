@@ -3,16 +3,13 @@ const { defineConfig } = require('cypress');
 module.exports = defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
-      // implement node event listeners here
+      // use Tasks to execute Node.js code
       on('task', {
-        // use Tasks to execute Node.js code
+        // implement node event listeners here
         // log to Node.js console
-        log: message => {
+        logToTerminal: message => {
           console.log(message);
           return null;
-        },
-        getAuthorization: () => {
-          return require('./test/auth').getAuthorization();
         },
       });
     },

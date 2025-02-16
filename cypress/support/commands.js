@@ -23,3 +23,15 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+// https://docs.cypress.io/app/tooling/typescript-support#Types-for-Custom-Commands
+
+// https://docs.cypress.io/api/cypress-api/custom-commands
+
+Cypress.Commands.add('logToTerminal', message => {
+  cy.task('logToTerminal', `@@@ ${message}`);
+});
+
+Cypress.Commands.add('getByDataTest', dataTestValue => {
+  return cy.get(`[data-test=${dataTestValue}]`);
+});
