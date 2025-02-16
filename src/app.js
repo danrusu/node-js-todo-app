@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 
 const cookieParser = require('cookie-parser');
-const { authMiddleware } = require('./middleware/auth.js');
+const { authMiddleware } = require('./middleware/auth-middleware.js');
 
 const {
   authenticate,
@@ -27,10 +27,11 @@ app.use(authMiddleware);
 
 // routes
 app.get('/', serveFileFromHtml('index.html'));
-app.get('/login', serveFileFromHtml('login.html'));
-app.get('/logout', logout);
 
+app.get('/login', serveFileFromHtml('login.html'));
 app.post('/login', authenticate);
+
+app.get('/logout', logout);
 
 app.get('/api/health-check', isHealthy);
 app.get('/api/username', username);

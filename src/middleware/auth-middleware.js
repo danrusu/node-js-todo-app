@@ -3,10 +3,11 @@ const { getUsername } = require('../session');
 module.exports = { authMiddleware };
 
 async function authMiddleware(req, res, next) {
-  const isAuthRequest = req.url.startsWith('/login');
+  const isAuthRequest = req.url === '/login';
+  const isHealthCheck = req.url === '/api/health-check';
   const isUserAuthenticated = await isAuthenticated(req);
 
-  if (isAuthRequest || isUserAuthenticated) {
+  if (isHealthCheck || isAuthRequest || isUserAuthenticated) {
     // allow access
     return next();
   }
@@ -14,7 +15,7 @@ async function authMiddleware(req, res, next) {
   denyAccess(req, res);
 }
 
-async function isAuthenticated(req) {  
+async function isAuthenticated(req) {
   const sessionId = req.cookies?.['session-id']; // using cookie-parser middleware
   if (!sessionId) {
     return false;

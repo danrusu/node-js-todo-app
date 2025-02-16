@@ -1,5 +1,7 @@
 const { writeFile, readFile } = require('fs').promises;
 
+const { getUsername } = require('../session');
+
 const TODO_DATA_FILE = 'data/todo.json';
 
 const read = async () => {
@@ -61,6 +63,13 @@ const deleteTodo = async (req, res) => {
   const todos = await read();
   const { id } = req.query;
   if (id == 'all') {
+    const sessionId = req.cookies?.['session-id'];
+    const username = await getUsername(sessionId);
+    if (username !== 'dev') {
+      res.status(403).send('Not authorized');
+      return;
+    }
+
     write([]);
     res.send({ status: 'deleted all', deleted: todos });
     return;

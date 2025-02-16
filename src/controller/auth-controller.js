@@ -1,5 +1,6 @@
 const { saveSession, getUsername, removeSession } = require('../session');
 
+// TODO move this to a PostgreSQL DB
 const VALID_CREDENTIALS = {
   tester: '123',
   dev: '321',
@@ -21,7 +22,7 @@ async function authenticate(req, res) {
 }
 
 async function username(req, res) {
-  const sessionId = req.headers.cookie.split('=')[1];
+  const sessionId = req.cookies?.['session-id'];
   const username = await getUsername(sessionId);
   res.send({ username });
 }
@@ -30,7 +31,7 @@ function areValidCredentials(username, password) {
   return VALID_CREDENTIALS[username] === password;
 }
 
-async function logout(req, res){
+async function logout(req, res) {
   removeSession(req.query.username);
   res.redirect('/');
 }

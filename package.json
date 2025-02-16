@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "nodemon --watch src src/server.js",
+    "dev": "nodemon --watch src -e js,html,css,json src/server.js",
     "wait-for-server": "wait-on --config test/wait-on-config.js",
     "kill-server": "kill-port 1112",
     "test:set:data": "ncp test/data/todo.json data/todo.json",
