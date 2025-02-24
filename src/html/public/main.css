@@ -11,6 +11,12 @@ h2 {
         color: var(--blue);
 }
 
+#user {
+        float: right;
+        margin-right: 50px;
+        font-size: large;
+}
+
 span {
         display: inline-block;
 }
@@ -112,4 +118,10 @@ select {
         border: 3px solid black;
         float: left;
         cursor: pointer;
+}
+
+#logout{
+        cursor: pointer;
+        color: var(--red);
+        text-align: right;
 }

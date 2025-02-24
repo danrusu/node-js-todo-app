@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<title>login</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<link rel="icon" type="image/x-icon" href="favicon.ico">
+	<style>
+		:root {
+			--text-color: lime;
+			--background-color: black;
+			--padding: 20px;
+			--main-font-size: 1.3rem;
+			--error-color: crimson;
+		}
+
+		*,
+		*:before,
+		*:after {
+			box-sizing: inherit;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			min-height: 100vh;
+			padding-top: calc(var(--padding)*10);
+			background-color: var(--background-color);
+			color: var(--text-color);
+			font-size: var(--main-font-size);
+		}
+
+		.login {
+			border-top: 1px dotted var(--text-color);
+			border-bottom: 1px dotted var(--text-color);
+			padding: var(--padding) 0;
+			display: grid;
+			grid-template-columns: 3fr 1fr 3fr;
+			grid-gap: var(--padding);
+			justify-items: center;
+		}
+
+		.login-input {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			grid-gap: var(--padding);
+		}
+
+		h2 {
+			padding-bottom: calc(var(--padding)*2);
+			font-size: calc(var(--font-size)*2);
+			text-transform: uppercase;
+			text-align: center;
+		}
+
+		#login-error {
+			color: var(--error-color);
+			text-transform: capitalize;
+		}
+
+		button {
+			margin-top: var(--padding);
+			color: black;
+			background-color: var(--text-color);
+			cursor: pointer;
+			font-weight: bold;
+			padding: calc(var(--padding)/4) calc(var(--padding));
+		}
+
+		button:hover {
+			background-color: white;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="login">
+		<div></div>
+		<h2>todo app</h2>
+		<div></div>
+
+		<div></div>
+		<div class="login-input">
+			<label for="username">Username</label>
+			<input id="username" placeholder="username">
+		</div>
+		<div></div>
+
+		<div></div>
+		<div class="login-input">
+			<label for="password">Password</label>
+			<input id="password" placeholder="password">
+		</div>
+		<div></div>
+
+		<div></div>
+		<div>
+			<button id="login" onclick="login();">LOGIN</button>
+		</div>
+		<div></div>
+
+		<div></div>
+		<div id="login-error"></div>
+		<div></div>
+	</div>
+
+	<script>
+		document.getElementById('password').addEventListener('keyup', loginOnEnter);
+		document.getElementById('login').addEventListener('keyup', loginOnEnter);
+
+		function loginOnEnter(event) {
+			if (event.key === 'Enter') {
+				login();
+			}
+		}
+
+		async function login() {
+			const username = getInput('username');
+			const password = getInput('password');
+
+			const login = await fetch('/login', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					username,
+					password
+				})
+			});
+
+			if (login.status === 200) {
+				window.location = '/'
+			}
+			else {
+				document.getElementById('login-error').innerText = (await login.json()).error;
+			}
+		}
+		function getInput(id) {
+			return document.getElementById(id).value;
+		}
+	</script>
+
+</body>
+
+</html>

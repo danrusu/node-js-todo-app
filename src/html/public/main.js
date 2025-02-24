@@ -1,6 +1,7 @@
 // ********* MAIN *********
 
 // needs todoHttpClient (todo-http-client.js)
+setUser();
 
 const todoHttpClient = new TodoHttpClient(`${location.origin}/api`);
 setAllTodos();
@@ -12,6 +13,14 @@ bindButtonsActionClickHandlers();
 // ******************
 
 // functions (hoisted)
+async function setUser() {
+  const userResponse = await fetch('/api/username');
+  const { username } = await userResponse.json();
+  document.getElementById(
+    'user',
+  ).innerHTML = `<p>User: ${username}</p><div id="logout" onclick="logout();">Logout</div>`;
+}
+
 function bindButtonsActionClickHandlers() {
   const buttonsClickEventHandlers = {
     createTodo: async () => {
@@ -31,7 +40,7 @@ function bindButtonsActionClickHandlers() {
     },
     deleteAllTodos: async () => {
       await todoHttpClient.deleteAllTodos();
-      await resetTodos();
+      resetTodos();
     },
   };
 
@@ -172,4 +181,11 @@ function setText(id, text) {
 
 function setInputValue(id, value) {
   selectById(id).value = value;
+}
+
+function logout() {
+  const username = document
+    .querySelector('#user p')
+    .textContent.replace('User: ', '');
+  location.href = `/logout?username=${username}`;
 }

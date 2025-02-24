@@ -2,6 +2,7 @@ const { wait } = require('../util/async-util');
 
 module.exports = {
   delay,
+  isHealthy,
 };
 
 async function delay(req, res) {
@@ -14,4 +15,8 @@ async function delay(req, res) {
   } catch (err) {
     res.status(400).send({ err: err.message });
   }
+}
+
+function isHealthy(_, res) {
+  res.send({ status: 'healthy' });
 }

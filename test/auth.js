@@ -1,10 +1,11 @@
 require('dotenv').config();
 
 module.exports = {
-  getAuthorization,
+  getBasicAuth,
+  createAuthSession,
 };
 
-function getAuthorization() {
+function getBasicAuth() {
   const { TODO_USERNAME: username, TODO_PASSWORD: password } = process.env;
   if (!username || !password) {
     throw new Error('Need credentials for TODO APP in .env');
@@ -13,4 +14,9 @@ function getAuthorization() {
     'base64',
   );
   return `Basic ${base64Encoded}`;
+}
+
+function createAuthSession() {
+  // TODO - implementation
+  return `auth session`;
 }

@@ -5,12 +5,20 @@
 <head>
 	<title>todo-app</title>
 	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
 	<link rel="stylesheet" href="main.css">
 	<link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 
 <body>
-	<h2>TODO APP</h2>
+	<div>
+		<span>
+			<h2>TODO APP</h2>
+		</span>
+		<span id="user">
+			<span id="username"></span>
+		</span>
+	</div>
 	<span id="actions">
 		<div id="form">
 			<div>
@@ -52,8 +60,8 @@
 	<span id="todos"></span>
 
 	<!-- It is recommended to put scripts here -->
-	<script src="todo-http-client.js" async defer></script>
-	<script src="main.js" async defer></script>
+	<script src="todo-http-client.js"></script>
+	<script src="main.js"></script>
 </body>
 
 
