@@ -78,31 +78,31 @@
 <body>
 	<div class="login">
 		<div></div>
-		<h2>todo app</h2>
+		<h2 data-test="login-header">todo app</h2>
 		<div></div>
 
 		<div></div>
 		<div class="login-input">
 			<label for="username">Username</label>
-			<input id="username" placeholder="username">
+			<input type="text" id="username" data-test="username" placeholder="username">
 		</div>
 		<div></div>
 
 		<div></div>
 		<div class="login-input">
 			<label for="password">Password</label>
-			<input id="password" placeholder="password">
+			<input type="password" id="password" data-test="password" placeholder="password">
 		</div>
 		<div></div>
 
 		<div></div>
 		<div>
-			<button id="login" onclick="login();">LOGIN</button>
+			<button id="login" data-test="login" onclick="login();">LOGIN</button>
 		</div>
 		<div></div>
 
 		<div></div>
-		<div id="login-error"></div>
+		<div id="login-error" data-test="login-error"></div>
 		<div></div>
 	</div>
 

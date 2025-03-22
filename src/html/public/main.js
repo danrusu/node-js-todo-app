@@ -18,7 +18,7 @@ async function setUser() {
   const { username } = await userResponse.json();
   document.getElementById(
     'user',
-  ).innerHTML = `<p>User: ${username}</p><div id="logout" onclick="logout();">Logout</div>`;
+  ).innerHTML = `<p>User: ${username}</p><div id="logout" data-test="logout" onclick="logout();">Logout</div>`;
 }
 
 function bindButtonsActionClickHandlers() {
@@ -80,28 +80,42 @@ function createTodoHtml(todoJson) {
       return div('');
     }
     if (!time) {
-      return div(date, { onclick: `setForm(${id})` });
+      return div(date, {
+        onclick: `setForm(${id})`,
+        'data-test': `date-${id}`,
+      });
     }
     return div(`${date}&nbsp; &nbsp;${time}`, {
       onclick: `setForm(${id})`,
+      'data-test': `time-${id}`,
     });
   };
   const todoInfoDiv =
     span(id, {
       class: 'todo-id',
       title: 'Unique id',
+      'data-test': `todo-id-${id}`,
     }) +
     span('x', {
       class: 'delete',
       title: 'Delete',
+      'data-test': `delete-${id}`,
       onclick: `(async () => { await todoHttpClient.deleteTodo(${id}); setAllTodos(); })()`,
     }) +
-    div(name, { class: 'name', onclick: `setForm(${id})` }) +
-    div(description, { onclick: `setForm(${id})` }) +
+    div(name, {
+      class: 'name',
+      onclick: `setForm(${id})`,
+      'data-test': `name-${id}`,
+    }) +
+    div(description, {
+      onclick: `setForm(${id})`,
+      'data-test': `description-${id}`,
+    }) +
     dateTimeDiv(date, time);
 
   return div(todoInfoDiv, {
     class: todoClass,
+    'data-test': `todo-${id}`,
   });
 }
 

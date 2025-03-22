@@ -13,33 +13,33 @@
 <body>
 	<div>
 		<span>
-			<h2>TODO APP</h2>
+			<h2 data-test="todoHeader">TODO APP</h2>
 		</span>
 		<span id="user">
-			<span id="username"></span>
+			<span id="username" data-test="username"></span>
 		</span>
 	</div>
-	<span id="actions">
+	<span id="actions" data-test="actions">
 		<div id="form">
 			<div>
 				<span>Title</span>
-				<input type="text" id="todoName" placeholder="TODO title" />
+				<input type="text" id="todoName" data-test="todoName" placeholder="TODO title" />
 			</div>
 			<div>
 				<span>Description</span>
-				<input type="text" id="todoDescription" placeholder="TODO details" />
+				<input type="text" id="todoDescription" data-test="todoDescription" placeholder="TODO details" />
 			</div>
 			<div>
 				<span>Date</span>
-				<input type="date" id="todoDate" />
+				<input type="date" id="todoDate" data-test="todoDate" />
 			</div>
 			<div>
 				<span>Time</span>
-				<input type="time" id="todoTime" />
+				<input type="time" id="todoTime" data-test="todoTime" />
 			</div>
 			<div>
 				<span>Priority</span>
-				<select id="todoPriority">
+				<select id="todoPriority" data-test="todoPriority">
 					<option value="1">HIGH</option>
 					<option value="2">MEDIUM</option>
 					<option value="3">LOW</option>
@@ -48,16 +48,16 @@
 			<div>
 				<span title="used only for UPDATE">Id</span>
 
-				<input title="used only for UPDATE" type="number" id="todoId" />
+				<input title="used only for UPDATE" type="number" id="todoId" data-test="todoId" />
 			</div>
 		</div>
 
-		<button id="createTodo">CREATE</button>
-		<button id="updateTodo">UPDATE</button>
-		<button id="deleteAllTodos">DELETE ALL</button>
+		<button id="createTodo" data-test="createTodo">CREATE</button>
+		<button id="updateTodo" data-test="updateTodo">UPDATE</button>
+		<button id="deleteAllTodos" data-test="deleteAllTodos">DELETE ALL</button>
 	</span>
 
-	<span id="todos"></span>
+	<span id="todos" data-test="todos"></span>
 
 	<!-- It is recommended to put scripts here -->
 	<script src="todo-http-client.js"></script>
