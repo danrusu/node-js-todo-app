@@ -18,7 +18,7 @@ async function setUser() {
   const { username } = await userResponse.json();
   document.getElementById(
     'user',
-  ).innerHTML = `<p>User: ${username}</p><div id="logout" data-test="logout" onclick="logout();">Logout</div>`;
+  ).innerHTML = `<p data-test="currentUser">User: ${username}</p><div id="logout" data-test="logout" onclick="logout();">Logout</div>`;
 }
 
 function bindButtonsActionClickHandlers() {

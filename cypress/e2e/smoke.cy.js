@@ -1,10 +1,13 @@
 /// <reference types="cypress" />
 
+import { TITLE as loginPageTitle } from '../support/pages/loginPage';
+import { URL as homePageUrl } from '../support/pages/homePage';
+
 describe('smoke test', () => {
   it('redirects to login page if not authenticated', () => {
     let pageTitle;
 
-    cy.visit('http://localhost:1112/');
+    cy.visit(homePageUrl);
 
     cy.url().then(url => {
       cy.logToTerminal(url);
@@ -22,15 +25,18 @@ describe('smoke test', () => {
 
     // then: not retried
     cy.title().then(title => {
+      // asynchronous code
       pageTitle = title;
       console.log('[1] pageTitle', pageTitle);
-      cy.expect(title).equals('login');
+      cy.expect(title).equals(loginPageTitle);
     });
 
-    console.log('[2] spageTitle', pageTitle);
+    // synchronous code; is executed before pageTitle is set (line 28)
+    console.log('[2] pageTitle', pageTitle);
 
     cy.wrap(null).then(() => {
-      console.log('[3] spageTitle', pageTitle);
+      // asynchronous code
+      console.log('[3] pageTitle', pageTitle);
     });
   });
 });

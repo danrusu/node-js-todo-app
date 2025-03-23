@@ -1,20 +1,33 @@
 /// <reference types="cypress" />
 
-const username = 'tester';
-const password = '123';
+import {
+  login,
+  currentUser,
+  URL as loginPageUrl,
+} from '../support/pages/loginPage';
+import {
+  URL as homePageUrl,
+  TITLE as homePageTitle,
+} from '../support/pages/homePage';
 
-describe('login test', () => {
-  it('logs in with user tester', () => {
-    cy.visit('http://localhost:1112/');
+const users = ['tester', 'dev'];
 
-    cy.get('#username').type(username);
-    cy.get('#password').type('123');
-    cy.get('#login').click();
+describe('valid credentials login', () => {
+  for (const username of users) {
+    it(`logs in with user ${username}`, () => {
+      const { password } = Cypress.env('users')[username];
 
-    cy.location().its('pathname').should('equal', '/');
+      cy.visit(homePageUrl);
 
-    cy.title().should('equal', 'todo-app');
+      cy.url().should('equal', loginPageUrl);
 
-    cy.get('#user p').should('have.text', `User: ${username}`);
-  });
+      login(username, password);
+
+      cy.location().its('pathname').should('equal', '/');
+
+      cy.title().should('equal', homePageTitle);
+
+      currentUser().should('have.text', `User: ${username}`);
+    });
+  }
 });
