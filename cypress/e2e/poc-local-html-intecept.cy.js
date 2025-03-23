@@ -8,8 +8,6 @@ const USERNAME = 'dummyUser';
 const PASSWORD = 'dummyPassword';
 const LOGIN_ERROR_MESSAGE = 'Wrong credentials';
 
-// use this to isolate and investigate either how cypress behaves
-// or to create logic for web pages, components or HTTP traffic
 describe('local html POC', () => {
   it(`tests local html in isolation`, { baseUrl: null }, () => {
     cy.intercept(

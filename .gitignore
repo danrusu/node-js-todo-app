@@ -3,3 +3,7 @@ node_modules
 postman/newman
 
 cypress.env.json
+
+cypress/reports
+cypress/screenshots
+cypress/downloads

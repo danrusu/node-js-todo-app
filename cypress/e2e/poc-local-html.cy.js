@@ -7,7 +7,7 @@ const HTML_LOCAL_POC_FILE = './cypress/poc.html';
 const USERNAME = 'dummyUser';
 const PASSWORD = 'dummyPassword';
 
-// use this to isolate and investigate either how cypress behaves
+// use a local HTML to isolate and investigate either how cypress behaves
 // or to create logic for web pages, components or HTTP traffic
 describe('local html POC', () => {
   it(`tests local html in isolation`, { baseUrl: null }, () => {
