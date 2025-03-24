@@ -11,7 +11,7 @@
     "test:set:data": "ncp test/data/todo.json data/todo.json",
     "test:api:postman": "cd postman && newman run TODO_APP.postman_collection.json -e TODO_LOCAL.postman_environment.json -r cli,json,htmlextra",
     "test:e2e": "cypress run --browser=chrome",
-    "test:e2e:auth": "cypress run --browser=chrome --spec cypress/e2e/auth.cy.js",
+    "test:e2e:regression": "cypress run --browser=chrome --spec cypress/e2e/regression.cy.js",
     "test:e2e:open": "cypress open --e2e --browser=chrome",
     "cy": "npm run test:e2e",
     "cyo": "npm run test:e2e:open"
