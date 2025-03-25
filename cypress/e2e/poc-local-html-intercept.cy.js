@@ -14,7 +14,7 @@ describe('local html POC', () => {
       // route matcher
       {
         method: 'POST',
-        url: '/login',
+        url: /\/login/,
       },
       // stubbed response
       {

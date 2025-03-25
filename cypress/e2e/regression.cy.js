@@ -14,5 +14,6 @@ describe('regression suite', () => {
     cy.visit(homePageUrl);
 
     // add test here
+    throw new Error('Add tests here :) !!!');
   });
 });

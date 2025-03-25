@@ -22,7 +22,10 @@ describe('[API] valid credentials login', { baseUrl: BASE_URL }, () => {
 
       cy.get('@login').then(response => {
         expect(response.status).to.eq(200);
-        expect(response.body.authenticated).to.be.true;
+        expect(
+          response.body.authenticated,
+          'response has authenticated prop set to true',
+        ).to.be.true;
         expect(response.headers['set-cookie'][0]).to.contain('session-id=');
       });
     });
@@ -47,7 +50,8 @@ describe('[API] invalid credentials login', { baseUrl: BASE_URL }, () => {
       cy.get('@login').then(response => {
         expect(response.status).to.eq(401);
         expect(response.body.error).to.equal('wrong credentials');
-        expect(response.headers['set-cookie']).to.be.undefined;
+        expect(response.headers['set-cookie'], 'no set cookie header').to.be
+          .undefined;
       });
     });
   }
