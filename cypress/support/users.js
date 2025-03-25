@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-import { URL as homePageUrl, login } from '../support/pages/loginPage';
+import { URL as loginPageUrl, login } from '../support/pages/loginPage';
 
 const TESTER_USER = 'tester';
 const DEV_USER = 'dev';
@@ -53,7 +53,7 @@ function getSessionInitHandlers() {
  */
 function sessionInit(username, password) {
   return () => {
-    cy.visit(homePageUrl);
+    cy.visit(loginPageUrl);
     login(username, password);
     console.log(`sessionInit(${username})`);
   };
